@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AnimalFarm.AnimalClasses;
 
 namespace AnimalFarm
 {
@@ -10,37 +6,63 @@ namespace AnimalFarm
     {
         public void Run()
         {
-            Hen Kuřátko = new Hen("Pepa");
-            Cow Kravička = new Cow("Bára");
-            Sheep Ovečka = new Sheep("Petra");
+            // Practice and use of Classes, Atributes and Properties.
+
+            // Declaration of animals
+            var animals = new Animal[3];
+            animals[0] = new Hen("Petra");
+            animals[1] = new Sheep("Bára");
+            animals[2] = new Cow("Pavla");
+
+            /* This program begins and runs until user refuses to continue. 
+               Each iteration give a yield of each animal. */
 
             bool proceed = true;
 
             while (proceed)
             {
+                // "Want to continue? (yes/no)"
                 Console.WriteLine("Chceš pokračovat? (y/n)");
+                
+                // If user answered yes to the previous question make animal noises and get yield.
                 bool input = (Console.ReadLine() == "y");
-
                 if (input)
                 {
-                    Kuřátko.Say();
-                    Console.WriteLine(Kuřátko.GetYield());
+                    
+                    // Get each animal to say something and output a yield.
+                    foreach (Animal animal in animals)
+                    {
+                        AnimalReaction(animal);
+                    }
 
-                    Kravička.Say();
-                    Console.WriteLine(Kravička.GetYield());
-
-                    Ovečka.Say();
-                    Console.WriteLine(Ovečka.GetYield());
                 }
+                // If user answered no to the last question end the iteration.
                 else
                 {
+                    
                     proceed = false;
                 }
             }
 
-            Console.WriteLine(Kuřátko.ReturnFinalYield());
-            Console.WriteLine(Kravička.ReturnFinalYield()); 
-            Console.WriteLine(Ovečka.ReturnFinalYield());
+            // Final amount of total yield for each animal.
+            Console.WriteLine("-----Total yield-----");
+
+            foreach(Animal animal in animals)
+            {
+                AnimalOutput(animal);
+            }
+
+        }
+
+        public void AnimalReaction(Animal animal)
+        {
+            animal.Say();
+            Console.WriteLine(animal.GetYield());
+        }
+
+        public void AnimalOutput(Animal animal)
+        {
+            Console.WriteLine(animal.ReturnFinalYield());
         }
     }
 }
